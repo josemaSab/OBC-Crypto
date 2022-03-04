@@ -14,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
-public abstract class Bloque {
+public class Bloque {
 
     //ATRIBUTOS
 
