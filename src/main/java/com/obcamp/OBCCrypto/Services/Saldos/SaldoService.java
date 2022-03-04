@@ -1,5 +1,11 @@
 package com.obcamp.OBCCrypto.Services.Saldos;
-
+/**
+ * Proyecto OBC-Crypto
+ * Servicio que calcula los saldos de una wallet
+ * @author Josema
+ * @version 1.0
+ * Equipo: Josema, Adrian, Manu
+ */
 public class SaldoService {
 
     //METODOS
