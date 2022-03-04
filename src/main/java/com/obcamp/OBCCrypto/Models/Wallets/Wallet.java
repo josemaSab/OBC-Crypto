@@ -1,4 +1,4 @@
-package com.obcamp.OBCCrypto.Models;
+package com.obcamp.OBCCrypto.Models.Wallets;
 
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 
