@@ -1,5 +1,7 @@
 package com.obcamp.OBCCrypto.Models.Transacciones;
 
+import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -19,7 +21,7 @@ public class Transaccion {
     private String receptor;
     private String firma;
     private LocalDateTime horaTransaccion;
-    private String datosAdicionales;
+    private DatosTransacción datosAdicionales;
     private double cantidad;
     private String hash;
 
@@ -31,18 +33,55 @@ public class Transaccion {
      * @param receptor clave publica receptor
      * @param firma clave privada emisor
      * @param datosAdicionales datos adicionales de la transaccion
-     * @param cantidad
+     * @param cantidad enviada
      */
-    public Transaccion(String emisor, String receptor, String firma, String datosAdicionales, double cantidad) {
+    public Transaccion(String emisor, String receptor, String firma, DatosTransacción datosAdicionales, double cantidad) {
         this.emisor = emisor;
         this.receptor = receptor;
         this.firma = firma;
         this.datosAdicionales = datosAdicionales;
         this.cantidad = cantidad;
         this.horaTransaccion = LocalDateTime.now(ZoneOffset.UTC);
+        this.hash = this.getHashTransaccion();
     }
 
     //METODOS
+
+    /**
+     * Metodo que hashea los datos de la transaccion
+     * @return hash de la transaccion.
+     */
+    private String getHashTransaccion(){
+        return SHA256.getSHA256(this.transaccionToString());
+    }
+
+    /**
+     * Metodo que pasa todos los valores de la transacción a un string
+     * @return un string con todos los valores de la transacción
+     */
+    public String transaccionToString() {
+        return "Transaccion{" +
+                "emisor='" + emisor + '\'' +
+                ", receptor='" + receptor + '\'' +
+                ", firma='" + firma + '\'' +
+                ", horaTransaccion=" + horaTransaccion +
+                ", datosAdicionales=" + datosAdicionales +
+                ", cantidad=" + cantidad +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "emisor='" + emisor + '\'' +
+                ", receptor='" + receptor + '\'' +
+                ", firma='" + firma + '\'' +
+                ", horaTransaccion=" + horaTransaccion +
+                ", datosAdicionales=" + datosAdicionales +
+                ", cantidad=" + cantidad +
+                ", hash='" + hash + '\'' +
+                '}';
+    }
 
     //GETTER Y SETTER
 
@@ -78,11 +117,11 @@ public class Transaccion {
         this.horaTransaccion = horaTransaccion;
     }
 
-    public String getDatosAdicionales() {
+    public DatosTransacción getDatosAdicionales() {
         return datosAdicionales;
     }
 
-    public void setDatosAdicionales(String datosAdicionales) {
+    public void setDatosAdicionales(DatosTransacción datosAdicionales) {
         this.datosAdicionales = datosAdicionales;
     }
 
