@@ -16,6 +16,11 @@ public class SHA256 {
 
     //METODOS
 
+    /**
+     * Metodo que hashea un string
+     * @param cadena string a hashear
+     * @return hash del string en hexadecimal
+     */
     public static String getSHA256(String cadena){
         String resultado = null;
         try {
