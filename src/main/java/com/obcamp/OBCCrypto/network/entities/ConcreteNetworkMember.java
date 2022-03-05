@@ -1,6 +1,7 @@
 package com.obcamp.OBCCrypto.network.entities;
 
 import com.obcamp.OBCCrypto.network.entities.base.AbstractNetworkMember;
+import com.obcamp.OBCCrypto.network.messaging.v1.MessageCommand;
 
 import java.net.InetAddress;
 
@@ -13,9 +14,9 @@ import java.net.InetAddress;
  * @author Manu
  * @version 1.0
  */
-public class ConcreteNetworkMember extends AbstractNetworkMember {
+public class ConcreteNetworkMember extends AbstractNetworkMember implements Subscriber {
 
-    private NetworkMemberCategory classOfMember = NetworkMemberCategory.UNDEFINED;
+    private NetworkMemberOperationMode operationMode = NetworkMemberOperationMode.UNDEFINED;
     private NetworkMemberStatus status;
 
 
@@ -25,20 +26,51 @@ public class ConcreteNetworkMember extends AbstractNetworkMember {
         super(address);
     }
 
-    public ConcreteNetworkMember(InetAddress address, NetworkMemberCategory classOfNode, NetworkMemberStatus status) {
+    public ConcreteNetworkMember(InetAddress address, NetworkMemberOperationMode operationMode, NetworkMemberStatus status) {
         super(address);
-        this.classOfMember = classOfNode;
+        this.operationMode = operationMode;
         this.status = status;
     }
 
     // getter y setter
 
-    public NetworkMemberCategory getClassOfMember() {
-        return classOfMember;
+    public NetworkMemberOperationMode getOperationMode() {
+        return operationMode;
     }
 
-    public void setClassOfMember(NetworkMemberCategory classOfMember) {
-        this.classOfMember = classOfMember;
+
+    public void setOperationMode(NetworkMemberOperationMode operationMode) {
+        this.operationMode = operationMode;
     }
 
+    public NetworkMemberStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(NetworkMemberStatus status) {
+        this.status = status;
+    }
+
+    // Overrides
+
+
+    /**
+     * TODO implementar la interfaz Subscriber. Se necesita antes la parte de TCP.
+     * Este metodo se encargara de enviar los mensajes. Lo dejo para implementarlo cuando este la parte de TCP
+     * más avanzada.
+     *
+     * El metodo esencialmente pasara el msg a una clase que se ocupe de gestionar el proceso de serialiación, el
+     * establecimiento de la conexión TCP, y la gestión de las respuestas.
+     *
+     * La idea general es agrupar los miembros en colecciones en función de su operationMode, y según el MessageCommandType
+     * notificar a una o más colecciones
+     *
+     * @param msg Una instancia de MessageCommand ya inicializada.
+     *
+     */
+    @Override
+    public void notify(MessageCommand msg) throws UnsupportedOperationException{
+        throw new UnsupportedOperationException("El método no está implementado")
+         ;
+    }
 }
