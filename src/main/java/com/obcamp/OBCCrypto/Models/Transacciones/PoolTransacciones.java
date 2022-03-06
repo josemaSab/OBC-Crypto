@@ -1,9 +1,7 @@
 package com.obcamp.OBCCrypto.Models.Transacciones;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import javax.persistence.Entity;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,8 @@ import java.util.List;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
-public class PoolTransacciones {
+@Entity
+public class PoolTransacciones implements Serializable {
 
     //ATRIBUTOS
 

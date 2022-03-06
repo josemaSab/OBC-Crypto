@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Proyecto OBC-Crypto
@@ -19,7 +22,7 @@ import java.util.List;
  * Equipo: Josema, Adrian, Manu
  */
 @Entity
-public class Bloque {
+public class Bloque implements Serializable {
 
     //ATRIBUTOS
     @Id
@@ -27,10 +30,11 @@ public class Bloque {
     private long numeroBloque;
     private String hashActual;
     private String hashAnterior;
-    private List<Transaccion> transacciones;
     private LocalDateTime horaCreacionBloque;
     private long nonce;
     private int dificultad;
+    //Relacion oneToMany con Transacción
+    private Set<Transaccion> transacciones = new HashSet<>();
 
     //CONSTRUCTORES
 
@@ -40,7 +44,7 @@ public class Bloque {
      * @param transacciones lista de transacciones
      * @param nonce numero para la prueba de trabajo
      */
-    public Bloque(String hashAnterior, List<Transaccion> transacciones, long nonce) {
+    public Bloque(String hashAnterior, Set<Transaccion> transacciones, long nonce) {
         this.hashActual = SHA256.getSHA256(this.bloqueToString());
         this.hashAnterior = hashAnterior;
         this.transacciones = transacciones;
@@ -95,11 +99,11 @@ public class Bloque {
         this.hashAnterior = hashAnterior;
     }
 
-    public List<Transaccion> getTransacciones() {
+    public Set<Transaccion> getTransacciones() {
         return transacciones;
     }
 
-    public void setTransacciones(List<Transaccion> transacciones) {
+    public void setTransacciones(Set<Transaccion> transacciones) {
         this.transacciones = transacciones;
     }
 

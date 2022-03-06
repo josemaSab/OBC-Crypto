@@ -2,6 +2,8 @@ package com.obcamp.OBCCrypto.Models.Transacciones;
 
 import com.obcamp.OBCCrypto.Services.Saldos.SaldoService;
 
+import java.io.Serializable;
+
 /**
  * Proyecto OBC-Crypto
  * Clase Datos Transaccion
@@ -9,7 +11,7 @@ import com.obcamp.OBCCrypto.Services.Saldos.SaldoService;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
-public class DatosTransacción {
+public class DatosTransacción implements Serializable {
 
     //ATRBUTOS
 

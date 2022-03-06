@@ -2,6 +2,8 @@ package com.obcamp.OBCCrypto.Models.Transacciones;
 
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.ZoneOffset;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
+@Entity
 public class Transaccion implements Serializable {
 
     //ATRIBUTOS
@@ -24,6 +27,7 @@ public class Transaccion implements Serializable {
     private LocalDateTime horaTransaccion;
     private DatosTransacción datosAdicionales;
     private double cantidad;
+    @Id
     private String hash;
 
     //CONSTRUCTORES
