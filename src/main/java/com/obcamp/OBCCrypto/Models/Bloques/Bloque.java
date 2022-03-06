@@ -3,6 +3,10 @@ package com.obcamp.OBCCrypto.Models.Bloques;
 import com.obcamp.OBCCrypto.Models.Transacciones.Transaccion;
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -14,15 +18,19 @@ import java.util.List;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
+@Entity
 public class Bloque {
 
     //ATRIBUTOS
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long numeroBloque;
     private String hashActual;
     private String hashAnterior;
     private List<Transaccion> transacciones;
     private LocalDateTime horaCreacionBloque;
     private long nonce;
+    private int dificultad;
 
     //CONSTRUCTORES
 
@@ -38,6 +46,7 @@ public class Bloque {
         this.transacciones = transacciones;
         this.horaCreacionBloque = LocalDateTime.now(ZoneOffset.UTC);
         this.nonce = nonce;
+        this.dificultad = 0;
     }
 
     //METODOS
@@ -52,6 +61,7 @@ public class Bloque {
                 ", transacciones=" + transacciones +
                 ", horaCreacionBloque=" + horaCreacionBloque +
                 ", nonce=" + nonce +
+                ", dificultad=" + dificultad +
                 '}';
     }
 
@@ -63,6 +73,7 @@ public class Bloque {
                 ", transacciones=" + transacciones +
                 ", horaCreacionBloque=" + horaCreacionBloque +
                 ", nonce=" + nonce +
+                ", dificultad=" + dificultad +
                 '}';
     }
 
@@ -106,5 +117,13 @@ public class Bloque {
 
     public void setNonce(long nonce) {
         this.nonce = nonce;
+    }
+
+    public int getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
     }
 }
