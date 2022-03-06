@@ -2,6 +2,7 @@ package com.obcamp.OBCCrypto.Models.Transacciones;
 
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 
+import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -13,7 +14,7 @@ import java.time.ZoneOffset;
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
  */
-public class Transaccion {
+public class Transaccion implements Serializable {
 
     //ATRIBUTOS
 
