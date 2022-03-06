@@ -28,6 +28,11 @@ public class PoolTransacciones {
 
     //METODOS
 
+    /**
+     * Metodo que serializa una transacción en
+     * @param transaccion
+     * @return
+     */
     public boolean addTransaccion(Transaccion transaccion){
         if(this.crearFlujo()){
             try {
