@@ -1,15 +1,12 @@
 package com.obcamp.OBCCrypto.network.core.messages.base;
 
+import com.obcamp.OBCCrypto.network.core.messages.ConcreteHeader;
 import com.obcamp.OBCCrypto.network.core.messages.exceptions.InvalidArgumentSizeException;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestConcreteHeader {

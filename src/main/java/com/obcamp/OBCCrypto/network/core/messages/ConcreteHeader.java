@@ -1,8 +1,9 @@
-package com.obcamp.OBCCrypto.network.core.messages.base;
+package com.obcamp.OBCCrypto.network.core.messages;
 
+import com.obcamp.OBCCrypto.network.core.messages.base.AbstractHeader;
 import com.obcamp.OBCCrypto.network.core.messages.exceptions.InvalidArgumentSizeException;
 
-public class ConcreteHeader extends AbstractHeader{
+public class ConcreteHeader extends AbstractHeader {
 
     private String checksum;
     private int payloadSize;

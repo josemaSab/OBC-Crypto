@@ -1,6 +1,7 @@
 package com.obcamp.OBCCrypto.network.core.messages.base;
 
 import com.obcamp.OBCCrypto.network.config.MsgConstants;
+import com.obcamp.OBCCrypto.network.core.messages.ConcreteHeader;
 import com.obcamp.OBCCrypto.network.core.messages.exceptions.InvalidArgumentSizeException;
 
 import java.nio.ByteBuffer;
@@ -52,11 +53,14 @@ public abstract class AbstractHeader {
      * @throws InvalidArgumentSizeException Si el argumento tiene más de 12 caracteres
      */
     public AbstractHeader(String commandName) throws NullPointerException, InvalidArgumentSizeException {
+        // Comprobamos que el nombre de comando no sea nulo
         if(commandName == null) throw new IllegalArgumentException("El argumento 'commandName' no puede ser nulo");
 
+        // Comprobamos que el nombre de comando no sea más largo de 12 carácteres
         if(commandName.length() > 12){
             throw new InvalidArgumentSizeException("El nombre del comando es demasiado largo (máx 12 caracteres)");
 
+            // Añadimos padding al nombre de comando para que tenga exáctamente 12 carácteres.
         }else if(commandName.length() < 12){
             // Esto habría que intentar dejarlo más elegante
             commandName = commandName.concat("\0\0\0\0\0\0\0\0\0\0\0\0").substring(0,12);
@@ -74,7 +78,7 @@ public abstract class AbstractHeader {
     }
 
     public ByteBuffer getHeader() {
-        return header;
+        return this.header;
     }
 
     // metodos append sobrecargados

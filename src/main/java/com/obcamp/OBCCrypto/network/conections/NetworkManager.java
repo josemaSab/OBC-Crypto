@@ -1,12 +1,7 @@
 package com.obcamp.OBCCrypto.network.conections;
 
-
-import com.obcamp.OBCCrypto.network.conections.tasks.PortListeningTask;
-
 import java.io.IOException;
 import java.util.concurrent.*;
-
-//import java.util.concurrent.*;
 
 public class NetworkManager implements Runnable{
 
@@ -29,7 +24,7 @@ public class NetworkManager implements Runnable{
 
 
     private final ServerSocketManager server;
-    private final ExecutorService portListenerService = Executors.newFixedThreadPool(MAX_CONNECTIONS);
+    private final ExecutorService conectionExecutor = Executors.newFixedThreadPool(MAX_CONNECTIONS);
 
     private BlockingQueue<PeerConnection> threadsQueue = new LinkedBlockingQueue<>();
 
@@ -56,7 +51,6 @@ public class NetworkManager implements Runnable{
         }catch (Exception e){
             System.out.println("Esta clase no esta terminada");
         }
-
     }
 
 

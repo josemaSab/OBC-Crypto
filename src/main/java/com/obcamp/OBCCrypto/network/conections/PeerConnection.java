@@ -1,6 +1,6 @@
 package com.obcamp.OBCCrypto.network.conections;
 
-import com.obcamp.OBCCrypto.network.core.messages.v1.ConcreteMessage;
+import com.obcamp.OBCCrypto.network.core.messages.ConcreteMessage;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -81,7 +81,7 @@ public class PeerConnection implements Runnable{
      * una InetAddress y un puerto, para crear el socket.
      *
      */
-    private void doConnect() throws IOException{
+    private void doConnect(){
 
         // TODO Sería mejor dejar pasar la excepción, y que le llegue al hilo que lanza a este?
         try{
@@ -127,7 +127,7 @@ public class PeerConnection implements Runnable{
      * @throws IOException Si ocurre un error de I/O
      */
     public synchronized void sendMessage(ConcreteMessage msg) throws IOException{
-        outputStream.write(msg.getBytes());
+        outputStream.write(msg.getMessage());
     }
 
     /**
