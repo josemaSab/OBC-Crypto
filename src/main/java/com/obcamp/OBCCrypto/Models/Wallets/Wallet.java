@@ -28,7 +28,7 @@ public class Wallet {
      */
     public Wallet(String claveUsuario) {
         this.claveUsuario = claveUsuario;
-        this.clavePrivada = SHA256.getSHA256(this.claveUsuario);
+        //this.clavePrivada = TODO HASHEAR CON EL METODO QUE SE CREE EN ENCRIPTSERVICE
         this.clavePublica = SHA256.getSHA256(this.clavePrivada);
     }
 
