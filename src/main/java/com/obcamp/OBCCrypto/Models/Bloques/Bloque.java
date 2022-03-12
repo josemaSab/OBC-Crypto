@@ -25,8 +25,8 @@ public class Bloque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long numeroBloque;
-    private String hashActual;
-    private String hashAnterior;
+    private byte[] hashActual;
+    private byte[] hashAnterior;
     private List<Transaccion> transacciones;
     private LocalDateTime horaCreacionBloque;
     private long nonce;
@@ -40,13 +40,13 @@ public class Bloque {
      * @param transacciones lista de transacciones
      * @param nonce numero para la prueba de trabajo
      */
-    public Bloque(String hashAnterior, List<Transaccion> transacciones, long nonce) {
-        this.hashActual = SHA256.getSHA256(this.bloqueToString());
+    public Bloque(byte[] hashAnterior, List<Transaccion> transacciones, long nonce) {
         this.hashAnterior = hashAnterior;
         this.transacciones = transacciones;
         this.horaCreacionBloque = LocalDateTime.now(ZoneOffset.UTC);
         this.nonce = nonce;
         this.dificultad = 0;
+        //this.bloqueActual = TODO hacer la prueba de trabajo
     }
 
     //METODOS
@@ -79,19 +79,19 @@ public class Bloque {
 
     //GETTER Y SETTER
 
-    public String getHashActual() {
+    public byte[] getHashActual() {
         return hashActual;
     }
 
-    public void setHashActual(String hashActual) {
+    public void setHashActual(byte[] hashActual) {
         this.hashActual = hashActual;
     }
 
-    public String getHashAnterior() {
+    public byte[] getHashAnterior() {
         return hashAnterior;
     }
 
-    public void setHashAnterior(String hashAnterior) {
+    public void setHashAnterior(byte[] hashAnterior) {
         this.hashAnterior = hashAnterior;
     }
 

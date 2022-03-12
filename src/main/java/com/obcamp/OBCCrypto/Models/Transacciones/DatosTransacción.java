@@ -27,10 +27,19 @@ public class DatosTransacción implements Serializable {
      * @param emisor clave publica del emisor(wallet)
      * @param receptor clave publica del emisor(wallet)
      */
-    public DatosTransacción(String datos, String emisor, String receptor) {
+    public DatosTransacción(String datos, byte[] emisor, byte[] receptor) {
         this.datos = datos;
         this.saldoActualEmisor = SaldoService.calculoSaldoActual(emisor);
         this.saldoActualReceptor = SaldoService.calculoSaldoActual(receptor);
+    }
+
+    @Override
+    public String toString() {
+        return "DatosTransacción{" +
+                "saldoActualEmisor=" + saldoActualEmisor +
+                ", saldoActualReceptor=" + saldoActualReceptor +
+                ", datos='" + datos + '\'' +
+                '}';
     }
 
     //GETTER Y SETTER

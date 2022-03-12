@@ -10,7 +10,7 @@ public class SaldoService {
 
     //METODOS
 
-    public static double calculoSaldoActual(String wallet){
+    public static double calculoSaldoActual(byte[] wallet){
         double saldoActual = 0d;
 
         //TODO DESARROLLAR EL CALCULO DE SALDOS DE UNA WALLET

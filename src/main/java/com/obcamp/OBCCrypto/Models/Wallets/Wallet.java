@@ -13,9 +13,9 @@ public class Wallet {
 
     //ATRIBUTOS
 
-    private String claveUsuario;
-    private String clavePublica;
-    private String clavePrivada;
+    private byte[] claveUsuario;
+    private byte[] clavePublica;
+    private byte[] clavePrivada;
 
     //CONSTRUCTORES
 
@@ -27,30 +27,30 @@ public class Wallet {
      * clave privada se vuelve a Hashear para obtener la clave publica.
      */
     public Wallet(String claveUsuario) {
-        this.claveUsuario = claveUsuario;
+        this.claveUsuario = claveUsuario.getBytes();
         //this.clavePrivada = TODO HASHEAR CON EL METODO QUE SE CREE EN ENCRIPTSERVICE
         this.clavePublica = SHA256.getSHA256(this.clavePrivada);
     }
 
     //GETTER Y SETTER
 
-    public String getClaveUsuario() {
+    public byte[] getClaveUsuario() {
         return claveUsuario;
     }
 
-    public String getClavePublica() {
+    public byte[] getClavePublica() {
         return clavePublica;
     }
 
-    public void setClavePublica(String clavePublica) {
+    public void setClavePublica(byte[] clavePublica) {
         this.clavePublica = clavePublica;
     }
 
-    public String getClavePrivada() {
+    public byte[] getClavePrivada() {
         return clavePrivada;
     }
 
-    public void setClavePrivada(String clavePrivada) {
+    public void setClavePrivada(byte[] clavePrivada) {
         this.clavePrivada = clavePrivada;
     }
 }

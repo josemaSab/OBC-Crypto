@@ -1,4 +1,4 @@
-package com.obcamp.OBCCrypto;
+package com.obcamp.OBCCrypto.Services;
 
 import com.obcamp.OBCCrypto.Services.Encrypt.EncryptService;
 import org.junit.jupiter.api.Test;

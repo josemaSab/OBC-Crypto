@@ -5,7 +5,6 @@ import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -21,14 +20,14 @@ public class Transaccion implements Serializable {
 
     //ATRIBUTOS
 
-    private String emisor;
-    private String receptor;
-    private String firma;
+    private byte[] emisor;
+    private byte[] receptor;
+    private byte[] firma;
     private LocalDateTime horaTransaccion;
     private DatosTransacción datosAdicionales;
     private double cantidad;
     @Id
-    private String hash;
+    private byte[] hash;
 
     //CONSTRUCTORES
 
@@ -38,9 +37,8 @@ public class Transaccion implements Serializable {
      * @param receptor clave publica receptor
      * @param firma clave privada emisor
      * @param datosAdicionales datos adicionales de la transaccion
-     * @param cantidad enviada
      */
-    public Transaccion(String emisor, String receptor, String firma, DatosTransacción datosAdicionales, double cantidad) {
+    public Transaccion(byte[] emisor, byte[] receptor, byte[] firma, DatosTransacción datosAdicionales) {
         this.emisor = emisor;
         this.receptor = receptor;
         this.firma = firma;
@@ -56,8 +54,8 @@ public class Transaccion implements Serializable {
      * Metodo que hashea los datos de la transaccion
      * @return hash de la transaccion.
      */
-    private String getHashTransaccion(){
-        return SHA256.getSHA256(this.transaccionToString());
+    private byte[] getHashTransaccion(){
+        return SHA256.getSHA256(this.transaccionToString().getBytes());
     }
 
     /**
@@ -82,7 +80,7 @@ public class Transaccion implements Serializable {
                 ", receptor='" + receptor + '\'' +
                 ", firma='" + firma + '\'' +
                 ", horaTransaccion=" + horaTransaccion +
-                ", datosAdicionales=" + datosAdicionales +
+                ", datosAdicionales=" + datosAdicionales.toString() +
                 ", cantidad=" + cantidad +
                 ", hash='" + hash + '\'' +
                 '}';
@@ -90,27 +88,27 @@ public class Transaccion implements Serializable {
 
     //GETTER Y SETTER
 
-    public String getEmisor() {
+    public byte[] getEmisor() {
         return emisor;
     }
 
-    public void setEmisor(String emisor) {
+    public void setEmisor(byte[] emisor) {
         this.emisor = emisor;
     }
 
-    public String getReceptor() {
+    public byte[] getReceptor() {
         return receptor;
     }
 
-    public void setReceptor(String receptor) {
+    public void setReceptor(byte[] receptor) {
         this.receptor = receptor;
     }
 
-    public String getFirma() {
+    public byte[] getFirma() {
         return firma;
     }
 
-    public void setFirma(String firma) {
+    public void setFirma(byte[] firma) {
         this.firma = firma;
     }
 
