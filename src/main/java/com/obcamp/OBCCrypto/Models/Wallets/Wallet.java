@@ -1,6 +1,11 @@
 package com.obcamp.OBCCrypto.Models.Wallets;
 
-import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
+
+import com.starkbank.ellipticcurve.Curve;
+import com.starkbank.ellipticcurve.PrivateKey;
+import com.starkbank.ellipticcurve.PublicKey;
+
+import java.math.BigInteger;
 
 /**
  * Proyecto OBC-Crypto
@@ -12,45 +17,36 @@ import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 public class Wallet {
 
     //ATRIBUTOS
-
-    private byte[] claveUsuario;
-    private byte[] clavePublica;
-    private byte[] clavePrivada;
+    private PrivateKey privateKey;
+    private PublicKey publicKey;
 
     //CONSTRUCTORES
 
     /**
-     * Consutor con un unico parametro.
-     * @param claveUsuario es la clave de usuario a través de la cual se obtendrá
-     * la clave publica(direccion de la wallet) y clave privada(firma digital).
-     * Primero se obtiene la clave privada a traves de la clave de usuario. Una vez obtenida la
-     * clave privada se vuelve a Hashear para obtener la clave publica.
+     * Constructor el cual le pasamos una clave que solo la sabe el usuario para generar las claves privadas y publicas
+     * @param claveUsuario clave del usuario
      */
     public Wallet(String claveUsuario) {
-        this.claveUsuario = claveUsuario.getBytes();
-        //this.clavePrivada = TODO HASHEAR CON EL METODO QUE SE CREE EN ENCRIPTSERVICE
-        this.clavePublica = SHA256.getSHA256(this.clavePrivada);
+
+        this.privateKey = new PrivateKey(Curve.secp256k1,new BigInteger(claveUsuario.getBytes()));
+        this.publicKey = privateKey.publicKey();
     }
 
     //GETTER Y SETTER
 
-    public byte[] getClaveUsuario() {
-        return claveUsuario;
+    public PrivateKey getPrivateKey() {
+        return privateKey;
     }
 
-    public byte[] getClavePublica() {
-        return clavePublica;
+    public void setPrivateKey(PrivateKey privateKey) {
+        this.privateKey = privateKey;
     }
 
-    public void setClavePublica(byte[] clavePublica) {
-        this.clavePublica = clavePublica;
+    public PublicKey getPublicKey() {
+        return publicKey;
     }
 
-    public byte[] getClavePrivada() {
-        return clavePrivada;
-    }
-
-    public void setClavePrivada(byte[] clavePrivada) {
-        this.clavePrivada = clavePrivada;
+    public void setPublicKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
     }
 }

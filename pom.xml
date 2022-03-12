@@ -48,6 +48,14 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>1.70</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.starkbank.ellipticcurve/starkbank-ecdsa -->
+		<!-- ECDSA PARA LA CREACION DE CLAVE PRIVADA, PUBLICA Y FIRMA -->
+		<dependency>
+			<groupId>com.starkbank.ellipticcurve</groupId>
+			<artifactId>starkbank-ecdsa</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
 
 	</dependencies>
 

@@ -2,6 +2,7 @@ package com.obcamp.OBCCrypto.Models.Bloques;
 
 import com.obcamp.OBCCrypto.Models.Transacciones.Transaccion;
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
+import com.obcamp.OBCCrypto.Services.POW.PruebaTrabajoService;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,15 +39,14 @@ public class Bloque {
      * Contructor con parametros
      * @param hashAnterior hash del bloque anterior
      * @param transacciones lista de transacciones
-     * @param nonce numero para la prueba de trabajo
+     * @param dificultad del bloque
      */
-    public Bloque(byte[] hashAnterior, List<Transaccion> transacciones, long nonce) {
+    public Bloque(byte[] hashAnterior, List<Transaccion> transacciones, int dificultad) {
         this.hashAnterior = hashAnterior;
         this.transacciones = transacciones;
         this.horaCreacionBloque = LocalDateTime.now(ZoneOffset.UTC);
-        this.nonce = nonce;
-        this.dificultad = 0;
-        //this.bloqueActual = TODO hacer la prueba de trabajo
+        this.nonce = 0;
+        this.dificultad = dificultad;
     }
 
     //METODOS
@@ -55,7 +55,7 @@ public class Bloque {
      * Metodo que crea un string con todos los datos del bloque
      * @return string con todos los datos del bloque
      */
-    private String bloqueToString() {
+    public String bloqueToString() {
         return "Bloque{" +
                 ", hashAnterior='" + hashAnterior + '\'' +
                 ", transacciones=" + transacciones +
@@ -68,8 +68,8 @@ public class Bloque {
     @Override
     public String toString() {
         return "Bloque{" +
-                "hashActual='" + hashActual + '\'' +
-                ", hashAnterior='" + hashAnterior + '\'' +
+                "hashActual='" + new String(hashActual)+ '\'' +
+                ", hashAnterior='" + new String(hashAnterior) + '\'' +
                 ", transacciones=" + transacciones +
                 ", horaCreacionBloque=" + horaCreacionBloque +
                 ", nonce=" + nonce +

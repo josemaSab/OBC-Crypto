@@ -21,13 +21,13 @@ public class SHA256 {
      * @param cadena string a hashear
      * @return hash del string en hexadecimal
      */
-    public static byte[] getSHA256(byte[] cadena){
-        byte[] resultado = null;
+    public static String getSHA256(String cadena){
+        String resultado = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             digest.reset();
-            digest.update(cadena);
-            resultado =digest.digest();
+            digest.update((cadena.getBytes(StandardCharsets.UTF_8)));
+            resultado = String.format("%064x",new BigInteger(1, digest.digest()));
         } catch (NoSuchAlgorithmException e) {
             System.err.println("No se encuentra el algoritmo instanciado: " + e.getMessage());
         }

@@ -55,7 +55,7 @@ public class Transaccion implements Serializable {
      * @return hash de la transaccion.
      */
     private byte[] getHashTransaccion(){
-        return SHA256.getSHA256(this.transaccionToString().getBytes());
+        return SHA256.getSHA256(this.transaccionToString()).getBytes();
     }
 
     /**
@@ -76,12 +76,12 @@ public class Transaccion implements Serializable {
     @Override
     public String toString() {
         return "Transaccion{" +
-                "emisor='" + emisor + '\'' +
-                ", receptor='" + receptor + '\'' +
-                ", firma='" + firma + '\'' +
-                ", horaTransaccion=" + horaTransaccion +
-                ", datosAdicionales=" + datosAdicionales.toString() +
-                ", cantidad=" + cantidad +
+                "emisor='" + emisor + '\'' + "\n"+
+                ", receptor='" + receptor + '\'' + "\n"+
+                ", firma='" + firma + '\'' + "\n"+
+                ", horaTransaccion=" + horaTransaccion + "\n"+
+                ", datosAdicionales=" + datosAdicionales.toString() + "\n"+
+                ", cantidad=" + cantidad + "\n"+
                 ", hash='" + hash + '\'' +
                 '}';
     }
