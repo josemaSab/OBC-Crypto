@@ -5,6 +5,7 @@ import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -20,9 +21,8 @@ public class Transaccion implements Serializable {
 
     //ATRIBUTOS
 
-    private byte[] emisor;
-    private byte[] receptor;
-    private byte[] firma;
+    private PublicKey emisor;
+    private PublicKey receptor;
     private LocalDateTime horaTransaccion;
     private DatosTransacción datosAdicionales;
     private double cantidad;
@@ -35,13 +35,11 @@ public class Transaccion implements Serializable {
      * Constructor con parametros
      * @param emisor clave publica emisor
      * @param receptor clave publica receptor
-     * @param firma clave privada emisor
      * @param datosAdicionales datos adicionales de la transaccion
      */
-    public Transaccion(byte[] emisor, byte[] receptor, byte[] firma, DatosTransacción datosAdicionales) {
+    public Transaccion(PublicKey emisor, PublicKey receptor, DatosTransacción datosAdicionales) {
         this.emisor = emisor;
         this.receptor = receptor;
-        this.firma = firma;
         this.datosAdicionales = datosAdicionales;
         this.cantidad = cantidad;
         this.horaTransaccion = LocalDateTime.now(ZoneOffset.UTC);
@@ -66,7 +64,6 @@ public class Transaccion implements Serializable {
         return "Transaccion{" +
                 "emisor='" + emisor + '\'' +
                 ", receptor='" + receptor + '\'' +
-                ", firma='" + firma + '\'' +
                 ", horaTransaccion=" + horaTransaccion +
                 ", datosAdicionales=" + datosAdicionales +
                 ", cantidad=" + cantidad +
@@ -78,38 +75,29 @@ public class Transaccion implements Serializable {
         return "Transaccion{" +
                 "emisor='" + emisor + '\'' + "\n"+
                 ", receptor='" + receptor + '\'' + "\n"+
-                ", firma='" + firma + '\'' + "\n"+
                 ", horaTransaccion=" + horaTransaccion + "\n"+
                 ", datosAdicionales=" + datosAdicionales.toString() + "\n"+
                 ", cantidad=" + cantidad + "\n"+
-                ", hash='" + hash + '\'' +
+                ", hash='" + new String(hash) + '\'' +
                 '}';
     }
 
     //GETTER Y SETTER
 
-    public byte[] getEmisor() {
+    public PublicKey getEmisor() {
         return emisor;
     }
 
-    public void setEmisor(byte[] emisor) {
+    public void setEmisor(PublicKey emisor) {
         this.emisor = emisor;
     }
 
-    public byte[] getReceptor() {
+    public PublicKey getReceptor() {
         return receptor;
     }
 
-    public void setReceptor(byte[] receptor) {
+    public void setReceptor(PublicKey receptor) {
         this.receptor = receptor;
-    }
-
-    public byte[] getFirma() {
-        return firma;
-    }
-
-    public void setFirma(byte[] firma) {
-        this.firma = firma;
     }
 
     public LocalDateTime getHoraTransaccion() {

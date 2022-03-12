@@ -3,6 +3,7 @@ package com.obcamp.OBCCrypto.Models.Transacciones;
 import com.obcamp.OBCCrypto.Services.Saldos.SaldoService;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 
 /**
  * Proyecto OBC-Crypto
@@ -27,7 +28,7 @@ public class DatosTransacción implements Serializable {
      * @param emisor clave publica del emisor(wallet)
      * @param receptor clave publica del emisor(wallet)
      */
-    public DatosTransacción(String datos, byte[] emisor, byte[] receptor) {
+    public DatosTransacción(String datos, PublicKey emisor, PublicKey receptor) {
         this.datos = datos;
         this.saldoActualEmisor = SaldoService.calculoSaldoActual(emisor);
         this.saldoActualReceptor = SaldoService.calculoSaldoActual(receptor);

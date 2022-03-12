@@ -1,11 +1,11 @@
 package com.obcamp.OBCCrypto.Models.Wallets;
 
 
-import com.starkbank.ellipticcurve.Curve;
-import com.starkbank.ellipticcurve.PrivateKey;
-import com.starkbank.ellipticcurve.PublicKey;
+import com.obcamp.OBCCrypto.Services.Wallet.WalletService;
+import com.starkbank.ellipticcurve.Ecdsa;
 
-import java.math.BigInteger;
+
+import java.security.*;
 
 /**
  * Proyecto OBC-Crypto
@@ -19,17 +19,26 @@ public class Wallet {
     //ATRIBUTOS
     private PrivateKey privateKey;
     private PublicKey publicKey;
+    private KeyPair keyPair;
 
     //CONSTRUCTORES
 
     /**
-     * Constructor el cual le pasamos una clave que solo la sabe el usuario para generar las claves privadas y publicas
-     * @param claveUsuario clave del usuario
+     * Constructor que genera las claves privadas y publicas
      */
-    public Wallet(String claveUsuario) {
+    public Wallet() {
+        try {
+            this.keyPair = WalletService.generarKeyPair();
+            this.privateKey = keyPair.getPrivate();
+            this.publicKey = keyPair.getPublic();
+        } catch (NoSuchAlgorithmException e) {
+            this.keyPair = null;
+            System.err.println("Hubo un error. No se encuentra el algoritmo. " + e.getMessage() );
+        } catch (InvalidAlgorithmParameterException e) {
+            this.keyPair = null;
+            System.err.println("Hubo un error. Los parametros del algoritmo son incorrectos. " + e.getMessage() );
+        }
 
-        this.privateKey = new PrivateKey(Curve.secp256k1,new BigInteger(claveUsuario.getBytes()));
-        this.publicKey = privateKey.publicKey();
     }
 
     //GETTER Y SETTER

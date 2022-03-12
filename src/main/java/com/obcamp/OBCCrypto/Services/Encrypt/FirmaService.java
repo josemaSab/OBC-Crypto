@@ -1,10 +1,8 @@
 package com.obcamp.OBCCrypto.Services.Encrypt;
 
 import com.obcamp.OBCCrypto.Models.Transacciones.Transaccion;
-import com.starkbank.ellipticcurve.Ecdsa;
-import com.starkbank.ellipticcurve.PrivateKey;
-import com.starkbank.ellipticcurve.PublicKey;
-import com.starkbank.ellipticcurve.Signature;
+import java.security.*;
+
 
 /**
  * Proyecto OBC-Crypto
@@ -23,26 +21,64 @@ public class FirmaService {
      * @param privateKey clave privada del emisor
      * @return objeto firma
      */
-    public static Signature firmaTransaccion(Transaccion transaccion, PrivateKey privateKey){
+    public static byte[] firmaTransaccion(Transaccion transaccion, PrivateKey privateKey){
+        Security.insertProviderAt(new org.bouncycastle.jce.provider.BouncyCastleProvider(), 1);
         Signature firma = null;
-        firma = Ecdsa.sign(transaccion.toString(), privateKey);
-        return firma;
+        byte[] transaccionFirmada = null;
+        try {
+            //Creamos la instancia del algoritmo a utilizar
+            firma = Signature.getInstance("SHA256withECDSA");
+            //Inicializa el objeto para la firma
+            firma.initSign(privateKey);
+            //Se prepara la firma de los datos pasados a byte[]
+            firma.update(transaccion.toString().getBytes());
+            //Se firma los datos
+            transaccionFirmada = firma.sign();
+            return transaccionFirmada;
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("Error no se encuentra el algoritmo. " +e.getMessage());
+        } catch (InvalidKeyException e) {
+            System.err.println("Clave privada invalida. " + e.getMessage());
+        } catch (SignatureException e) {
+            System.err.println("Error en la firma. " + e.getMessage());
+        }
+        return null;
     }
 
     /**
      * Metodo que comprueba si la fima de una transaccion es correcta
      * @param transaccion transaccion a verificar
-     * @param firma firma de la transaccion
+     * @param transaccionFirmada transaccion firmada
      * @param publicKey clave publica del emisor
      * @return true si es correcto y false si no lo es
      */
-    public static boolean verificarFirma(Transaccion transaccion, Signature firma, PublicKey publicKey){
+    public static boolean verificarFirma(Transaccion transaccion, byte[] transaccionFirmada, PublicKey publicKey){
         boolean verificada = false;
-        //Si la verificacion de la transaccion con la firma y la clave publica del emisor es true la variable
-        //verificada toma el valor true
-        if(Ecdsa.verify(transaccion.toString(), firma, publicKey)){
-            verificada = true;
+        Signature firma = null;
+        try {
+            //Creamos la instancia del algoritmo a utilizar
+            firma = Signature.getInstance("SHA256withRSA");
+            //Inicializa el objeto verificar
+            firma.initVerify(publicKey);
+            //Se prepara la firma de los datos pasados a byte[]
+            firma.update(transaccion.toString().getBytes());
+            //Verificamos si es correcto los datos pasados
+            verificada = firma.verify(transaccionFirmada);
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("Error no se encuentra el algoritmo. " +e.getMessage());
+        } catch (InvalidKeyException e) {
+            System.err.println("Clave privada invalida. " + e.getMessage());
+        } catch (SignatureException e) {
+            System.err.println("Error en la firma. " + e.getMessage());
         }
         return verificada;
+    }
+
+    /**
+     * Muestra la transaccion firmada en formato String
+     * @param transaccionFirmada transaccion firmada
+     */
+    public static void mostrarFirmadoString(byte[] transaccionFirmada){
+        System.out.println("\nFirma:\n" + new String(transaccionFirmada));
     }
 }

@@ -1,4 +1,7 @@
 package com.obcamp.OBCCrypto.Services.Saldos;
+
+import java.security.PublicKey;
+
 /**
  * Proyecto OBC-Crypto
  * Servicio que calcula los saldos de una wallet
@@ -10,7 +13,7 @@ public class SaldoService {
 
     //METODOS
 
-    public static double calculoSaldoActual(byte[] wallet){
+    public static double calculoSaldoActual(PublicKey wallet){
         double saldoActual = 0d;
 
         //TODO DESARROLLAR EL CALCULO DE SALDOS DE UNA WALLET
