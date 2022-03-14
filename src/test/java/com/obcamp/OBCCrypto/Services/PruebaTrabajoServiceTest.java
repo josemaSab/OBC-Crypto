@@ -14,7 +14,7 @@ public class PruebaTrabajoServiceTest {
     public void pruebaPow(){
         byte[] hashanterior = SHA256.getSHA256("Estes es el hash del bloque anteior").getBytes();
         List<Transaccion> transaciones = new ArrayList<>();
-        Bloque bloque1 = new Bloque(hashanterior, transaciones, 5);
+        Bloque bloque1 = new Bloque(hashanterior, transaciones, 6);
         System.out.println("Minando Bloque....");
         System.out.println(PruebaTrabajoService.pow(bloque1).toString());
     }

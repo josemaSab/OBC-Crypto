@@ -14,6 +14,7 @@ import java.security.spec.ECGenParameterSpec;
  */
 public class WalletService {
 
+
     //METODOS
 
     /**
@@ -30,5 +31,7 @@ public class WalletService {
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         return keyPair;
     }
+
+
 
 }
