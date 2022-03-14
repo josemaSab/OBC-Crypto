@@ -1,4 +1,4 @@
-package com.obcamp.OBCCrypto.Services;
+package com.obcamp.OBCCrypto.Models;
 
 import com.obcamp.OBCCrypto.Models.Wallets.Wallet;
 import org.junit.jupiter.api.Test;

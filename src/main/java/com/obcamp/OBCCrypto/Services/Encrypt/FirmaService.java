@@ -57,7 +57,7 @@ public class FirmaService {
         Signature firma = null;
         try {
             //Creamos la instancia del algoritmo a utilizar
-            firma = Signature.getInstance("SHA256withRSA");
+            firma = Signature.getInstance("SHA256withECDSA");
             //Inicializa el objeto verificar
             firma.initVerify(publicKey);
             //Se prepara la firma de los datos pasados a byte[]
@@ -75,10 +75,15 @@ public class FirmaService {
     }
 
     /**
-     * Muestra la transaccion firmada en formato String
-     * @param transaccionFirmada transaccion firmada
+     * Muestra un array de bytes en formato cadena de caracteres Hexadecimal
+     * @param arrayBytes array de bytes a convertir
+     * @return un string en formato hexadecimal
      */
-    public static void mostrarFirmadoString(byte[] transaccionFirmada){
-        System.out.println("\nFirma:\n" + new String(transaccionFirmada));
+    public static String ArrayBytesToHexString(byte[] arrayBytes){
+        StringBuilder sb = new StringBuilder();
+        for(byte b: arrayBytes){
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString();
     }
 }
