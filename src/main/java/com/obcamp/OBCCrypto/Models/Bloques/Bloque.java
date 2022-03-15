@@ -37,6 +37,12 @@ public class Bloque {
     //CONSTRUCTORES
 
     /**
+     * Constructor sin parametros
+     */
+    public Bloque() {
+    }
+
+    /**
      * Contructor con parametros
      * @param hashAnterior hash del bloque anterior
      * @param transacciones lista de transacciones
@@ -70,7 +76,7 @@ public class Bloque {
     public String toString() {
         return "Bloque{" +
                 "hashActual='" + new String(hashActual)+ '\'' +
-                ", hashAnterior='" + new String(hashAnterior) + '\'' +
+                ", hashAnterior='" + hashAnterior + '\'' +
                 ", transacciones=" + transacciones +
                 ", horaCreacionBloque=" + horaCreacionBloque +
                 ", nonce=" + nonce +

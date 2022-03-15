@@ -82,7 +82,7 @@ public class FirmaService {
     public static String ArrayBytesToHexString(byte[] arrayBytes){
         StringBuilder sb = new StringBuilder();
         for(byte b: arrayBytes){
-            sb.append(String.format("%02X", b));
+            sb.append(String.format("%02x", b));
         }
         return sb.toString();
     }

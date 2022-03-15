@@ -20,6 +20,22 @@ public class SaldoService {
     @Autowired
     public TransaccionRepository transaccionRepository;
 
+    //CONSTRUCTORES
+
+    /**
+     * Constructor sin parametros
+     */
+    public SaldoService() {
+    }
+
+    /**
+     * Constructor con parametros
+     * @param transaccionRepository repositorio de transacciones
+     */
+    public SaldoService(TransaccionRepository transaccionRepository) {
+        this.transaccionRepository = transaccionRepository;
+    }
+
     //METODOS
 
     /**

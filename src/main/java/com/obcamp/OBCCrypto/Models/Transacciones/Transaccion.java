@@ -40,6 +40,12 @@ public class Transaccion implements Serializable {
     //CONSTRUCTORES
 
     /**
+     * Constructor sin parametros
+     */
+    public Transaccion() {
+    }
+
+    /**
      * Constructor con parametros
      * @param emisor clave publica emisor
      * @param receptor clave publica receptor

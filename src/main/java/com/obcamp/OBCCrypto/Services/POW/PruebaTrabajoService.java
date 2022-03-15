@@ -18,6 +18,7 @@ public class PruebaTrabajoService {
         Bloque bloque = null;
         long nonce = prebloque.getNonce();
         String hash= SHA256.getSHA256(prebloque.bloqueToString());
+        System.out.println("Minando bloque...");
         while(obtenerCeros(hash, prebloque.getDificultad()) == false){
             nonce++;
             prebloque.setNonce(nonce);
@@ -26,6 +27,7 @@ public class PruebaTrabajoService {
         }
         bloque = prebloque;
         bloque.setHashActual(hash.getBytes());
+        System.out.println(bloque.toString());
         return bloque;
     }
 

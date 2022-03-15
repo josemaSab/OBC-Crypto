@@ -25,6 +25,12 @@ public class DatosTransacción implements Serializable {
     //CONSTRUCTORES
 
     /**
+     * Consutructor sin parametros
+     */
+    public DatosTransacción() {
+    }
+
+    /**
      * Constructor con parametros
      * @param datos adicionales de la transaccion
      * @param emisor clave publica del emisor(wallet)
@@ -32,8 +38,13 @@ public class DatosTransacción implements Serializable {
      */
     public DatosTransacción(String datos, PublicKey emisor, PublicKey receptor, double cantidadEnviada, double comision) {
         this.datos = datos;
+        /* TODO ESTAS DOS DECLARACIONES SE DESCOMENTARAN CUANDO LA BASE DE DATOS ESTE FUNCIONANDO.
         this.saldoActualEmisor = saldoService.calculoSaldos(emisor,true, cantidadEnviada, comision);
         this.saldoActualReceptor = saldoService.calculoSaldos(receptor, false, cantidadEnviada, comision);
+        */
+        this.saldoActualEmisor = 0;
+        this.saldoActualReceptor = 0;
+
     }
 
     @Override
