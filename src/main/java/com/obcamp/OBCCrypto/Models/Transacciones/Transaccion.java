@@ -1,9 +1,9 @@
 package com.obcamp.OBCCrypto.Models.Transacciones;
 
+import com.obcamp.OBCCrypto.Models.Bloques.Bloque;
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.PublicKey;
 import java.time.LocalDateTime;
@@ -17,17 +17,25 @@ import java.time.ZoneOffset;
  * Equipo: Josema, Adrian, Manu
  */
 @Entity
+@Table(name = "Transacciones")
 public class Transaccion implements Serializable {
 
     //ATRIBUTOS
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private PublicKey emisor;
     private PublicKey receptor;
     private LocalDateTime horaTransaccion;
     private DatosTransacción datosAdicionales;
     private double cantidad;
-    @Id
     private byte[] hash;
+
+    //Relaciones
+    @ManyToOne
+    @JoinColumn(name = "bloque_id")
+    private Bloque bloque;
+
 
     //CONSTRUCTORES
 
@@ -122,5 +130,21 @@ public class Transaccion implements Serializable {
 
     public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public byte[] getHash() {
+        return hash;
+    }
+
+    public void setHash(byte[] hash) {
+        this.hash = hash;
     }
 }

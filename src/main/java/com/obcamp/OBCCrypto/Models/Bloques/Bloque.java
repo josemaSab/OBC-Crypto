@@ -4,10 +4,7 @@ import com.obcamp.OBCCrypto.Models.Transacciones.Transaccion;
 import com.obcamp.OBCCrypto.Services.Encrypt.SHA256;
 import com.obcamp.OBCCrypto.Services.POW.PruebaTrabajoService;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -20,18 +17,22 @@ import java.util.List;
  * Equipo: Josema, Adrian, Manu
  */
 @Entity
+@Table(name = "BlockChain")
 public class Bloque {
 
     //ATRIBUTOS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long numeroBloque;
+    private Long numeroBloque;
     private byte[] hashActual;
     private byte[] hashAnterior;
-    private List<Transaccion> transacciones;
     private LocalDateTime horaCreacionBloque;
     private long nonce;
     private int dificultad;
+    //Relaciones
+    @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL)
+    private List<Transaccion> transacciones;
+
 
     //CONSTRUCTORES
 
@@ -125,5 +126,13 @@ public class Bloque {
 
     public void setDificultad(int dificultad) {
         this.dificultad = dificultad;
+    }
+
+    public Long getNumeroBloque() {
+        return numeroBloque;
+    }
+
+    public void setNumeroBloque(Long numeroBloque) {
+        this.numeroBloque = numeroBloque;
     }
 }
