@@ -1,6 +1,5 @@
 package com.obcamp.OBCCrypto.Models.Transacciones;
 
-import com.obcamp.OBCCrypto.Services.BaseDatos.TransaccionService;
 import com.obcamp.OBCCrypto.Services.Saldos.SaldoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,10 +30,10 @@ public class DatosTransacción implements Serializable {
      * @param emisor clave publica del emisor(wallet)
      * @param receptor clave publica del emisor(wallet)
      */
-    public DatosTransacción(String datos, PublicKey emisor, PublicKey receptor) {
+    public DatosTransacción(String datos, PublicKey emisor, PublicKey receptor, double cantidadEnviada, double comision) {
         this.datos = datos;
-        this.saldoActualEmisor = saldoService.calculoSaldoActualEmisor(emisor);
-        this.saldoActualReceptor = saldoService.calculoSaldoActualReceptor(receptor);
+        this.saldoActualEmisor = saldoService.calculoSaldos(emisor,true, cantidadEnviada, comision);
+        this.saldoActualReceptor = saldoService.calculoSaldos(receptor, false, cantidadEnviada, comision);
     }
 
     @Override

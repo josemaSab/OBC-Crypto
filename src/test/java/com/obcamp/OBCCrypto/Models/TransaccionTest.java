@@ -15,12 +15,15 @@ public class TransaccionTest {
 
     @Test
     public void creacionTransaccion() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException {
+        double cantidad = 50d;
+        double comision = 0.2d;
         keyPair = WalletService.generarKeyPair();
         emisor = keyPair.getPublic();
         receptor = keyPair.getPublic();
+
         Transaccion transaccion = new Transaccion(emisor, receptor,
-                new DatosTransacción("prueba", emisor, receptor));
-        transaccion.setCantidad(50);
+                new DatosTransacción("prueba", emisor, receptor,cantidad, comision), cantidad);
+        transaccion.setCantidad(cantidad);
         System.out.println(transaccion.toString());
     }
 }

@@ -44,8 +44,9 @@ public class Transaccion implements Serializable {
      * @param emisor clave publica emisor
      * @param receptor clave publica receptor
      * @param datosAdicionales datos adicionales de la transaccion
+     * @param cantidad cantidad a enviar
      */
-    public Transaccion(PublicKey emisor, PublicKey receptor, DatosTransacción datosAdicionales) {
+    public Transaccion(PublicKey emisor, PublicKey receptor, DatosTransacción datosAdicionales, double cantidad) {
         this.emisor = emisor;
         this.receptor = receptor;
         this.datosAdicionales = datosAdicionales;

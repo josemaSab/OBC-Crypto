@@ -23,35 +23,34 @@ public class SaldoService {
     //METODOS
 
     /**
-     * Calcula el saldo actual del emisor
-     * @param publicKey wallet del emisor
-     * @return saldo actual
+     * Metodo que calcula los saldos del emisor y del recptor despues de una transaccion
+     * @param publicKey wallet
+     * @param emisor definimos true si es emisor y false si es receptor
+     * @param cantidadEnviada cantidad enviada en la transaccion
+     * @param comision comision de la transaccion
+     * @return el calculo del saldo
      */
-    public double calculoSaldoActualEmisor(PublicKey publicKey){
-        double saldoActual = 0d;
-        Transaccion ultimaTransaccion = null;
-        List<Transaccion> listaTransacciones = new ArrayList<>();
-
-        listaTransacciones = this.transaccionRepository.findAllByEmisor(publicKey);
-        for(int i = 1; i< listaTransacciones.size(); i++){
-            if(i == 1){
-                ultimaTransaccion = listaTransacciones.get(i-1);
-            }
-            if(ultimaTransaccion.getHoraTransaccion().isBefore(listaTransacciones.get(i).getHoraTransaccion())){
-                ultimaTransaccion = listaTransacciones.get(i);
-            }
+    public double calculoSaldos(PublicKey publicKey, boolean emisor, double cantidadEnviada, double comision ){
+        double saldo = 0d;
+        Transaccion ultimaTransaccion;
+        //Si es emisor restamos la cantidad de la transaccion y la comision
+        if (emisor == true) {
+             ultimaTransaccion = ultimaTransaccion(publicKey);
+             saldo = ultimaTransaccion.getDatosAdicionales().getSaldoActualEmisor() - comision - cantidadEnviada;
+        //Si es el receptor sumamos la cantidad de la transaccion
+        }else{
+            ultimaTransaccion = ultimaTransaccion(publicKey);
+            saldo = ultimaTransaccion.getDatosAdicionales().getSaldoActualReceptor() + cantidadEnviada;
         }
-        saldoActual = ultimaTransaccion.getDatosAdicionales().getSaldoActualEmisor();
-        return saldoActual;
+        return saldo;
     }
 
     /**
-     * Calculo actual del receptor
-     * @param publicKey wallet del receptor
-     * @return saldo actual
+     * Devuleve la ultima transaccion en la que participo la wallet pasada por parametro
+     * @param publicKey wallet buscada
+     * @return saultima transaccion
      */
-    public double calculoSaldoActualReceptor(PublicKey publicKey){
-        double saldoActual = 0d;
+    private Transaccion ultimaTransaccion(PublicKey publicKey){
         Transaccion ultimaTransaccion = null;
         List<Transaccion> listaTransacciones = new ArrayList<>();
 
@@ -64,8 +63,7 @@ public class SaldoService {
                 ultimaTransaccion = listaTransacciones.get(i);
             }
         }
-        saldoActual = ultimaTransaccion.getDatosAdicionales().getSaldoActualReceptor();
-        return saldoActual;
+        return ultimaTransaccion;
     }
 
     //GETTER Y SETTER
