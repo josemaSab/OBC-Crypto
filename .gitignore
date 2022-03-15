@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/blockchain.mv.db
+/blockchain.trace.db
