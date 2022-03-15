@@ -14,7 +14,6 @@ import java.security.spec.ECGenParameterSpec;
  */
 public class WalletService {
 
-
     //METODOS
 
     /**

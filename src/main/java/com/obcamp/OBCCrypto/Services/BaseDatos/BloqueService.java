@@ -31,6 +31,17 @@ public class BloqueService {
     public BloqueService() {
     }
 
+    /**
+     * Consutrctor con parametros
+     * @param bloqueRepository repositorio de bloque
+     * @param transaccionRepository repositorio de transaccion
+     */
+    public BloqueService(BloqueRepository bloqueRepository, TransaccionRepository transaccionRepository) {
+        this.bloqueRepository = bloqueRepository;
+        this.transaccionRepository = transaccionRepository;
+    }
+
+
     //METODOS
 
     /**
@@ -82,5 +93,4 @@ public class BloqueService {
         }
         return true;
     }
-
 }

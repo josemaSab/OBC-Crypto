@@ -1,6 +1,8 @@
 package com.obcamp.OBCCrypto.Models.Transacciones;
 
+import com.obcamp.OBCCrypto.Services.BaseDatos.TransaccionService;
 import com.obcamp.OBCCrypto.Services.Saldos.SaldoService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.security.PublicKey;
@@ -15,7 +17,8 @@ import java.security.PublicKey;
 public class DatosTransacción implements Serializable {
 
     //ATRBUTOS
-
+    @Autowired
+    private SaldoService saldoService ;
     private double saldoActualEmisor;
     private double saldoActualReceptor;
     private String datos;
@@ -30,8 +33,8 @@ public class DatosTransacción implements Serializable {
      */
     public DatosTransacción(String datos, PublicKey emisor, PublicKey receptor) {
         this.datos = datos;
-        this.saldoActualEmisor = SaldoService.calculoSaldoActual(emisor);
-        this.saldoActualReceptor = SaldoService.calculoSaldoActual(receptor);
+        this.saldoActualEmisor = saldoService.calculoSaldoActualEmisor(emisor);
+        this.saldoActualReceptor = saldoService.calculoSaldoActualReceptor(receptor);
     }
 
     @Override
