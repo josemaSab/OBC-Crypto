@@ -1,6 +1,6 @@
 package com.obcamp.OBCCrypto.network.conections;
 
-import com.obcamp.OBCCrypto.network.core.messages.ConcreteMessage;
+import com.obcamp.OBCCrypto.network.core.messaging.ConcreteMessage;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -123,7 +123,7 @@ public class PeerConnection implements Runnable{
     /**
      * Escribe el mensaje convertido en bytes en la salida del socket.
      * @param msg Instancia de {@link ConcreteMessage} o subclases de esta que implemente el método {@code getBytes()}
-     *            declarado abstracto en {@link com.obcamp.OBCCrypto.network.core.messages.base.AbstractMessage}.
+     *            declarado abstracto en {@link com.obcamp.OBCCrypto.network.core.messaging.base.AbstractMessage}.
      * @throws IOException Si ocurre un error de I/O
      */
     public synchronized void sendMessage(ConcreteMessage msg) throws IOException{

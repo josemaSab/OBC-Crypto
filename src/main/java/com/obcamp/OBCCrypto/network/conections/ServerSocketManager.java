@@ -52,9 +52,13 @@ public class ServerSocketManager {
         return instance;
     }
 
-    public static ServerSocketManager getInstance(int port) throws IOException{
+    public static ServerSocketManager getInstance(int port) throws IOException, IllegalStateException{
         if(instance == null){
             return new ServerSocketManager(port);
+        }else if (instance.sServer.getLocalPort() != port){
+            throw new IllegalStateException(
+                    "Ya estamos escuchando el puerto: " + instance.sServer.getLocalPort() +", " +
+                            "imposible escuchar simultaneamente el" + "puerto: " + port);
         }
         return instance;
     }

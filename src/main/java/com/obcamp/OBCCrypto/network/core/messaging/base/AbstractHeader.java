@@ -1,8 +1,8 @@
-package com.obcamp.OBCCrypto.network.core.messages.base;
+package com.obcamp.OBCCrypto.network.core.messaging.base;
 
 import com.obcamp.OBCCrypto.network.config.MsgConstants;
-import com.obcamp.OBCCrypto.network.core.messages.ConcreteHeader;
-import com.obcamp.OBCCrypto.network.core.messages.exceptions.InvalidArgumentSizeException;
+import com.obcamp.OBCCrypto.network.core.messaging.ConcreteHeader;
+import com.obcamp.OBCCrypto.network.core.messaging.exceptions.InvalidArgumentSizeException;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -21,9 +21,8 @@ import java.nio.charset.StandardCharsets;
  * @version 1.0
  * @since 1.0
  */
-public abstract class AbstractHeader {
+public abstract class AbstractHeader{
 
-    // TODO El tamaño del header habría que juntarlo con otras constantes
     /**
      *
      * El buffer aloja la información del header en bytes. El orden debe ser:
@@ -39,12 +38,25 @@ public abstract class AbstractHeader {
      *  <p>El tamaño y el hash del payload se gestionan desde la clase hija {@link ConcreteHeader}</p>
      *
      */
-    private ByteBuffer header = ByteBuffer.allocate(54);
+    private ByteBuffer header;
+
+    // 6 + 12 + 4 + 32 = 54
+    public static final int HEADER_LENGTH = 54;
 
     /**
      * Sirve para identificar el tipo de mensaje, y notificar al controller correspondiente
      */
-    private final String commandName;
+    protected String commandName;
+
+    /**
+     * El tamaño en bytes del contenido del mensaje
+     */
+    protected int payloadSize;
+
+    /**
+     * El checksum del contenido del mensaje
+     */
+    protected byte[] checksum;
 
     /**
      *
@@ -57,56 +69,99 @@ public abstract class AbstractHeader {
         if(commandName == null) throw new IllegalArgumentException("El argumento 'commandName' no puede ser nulo");
 
         // Comprobamos que el nombre de comando no sea más largo de 12 carácteres
-        if(commandName.length() > 12){
+        if(commandName.length() > MsgConstants.MESSAGE_COMAND_SIZE){
             throw new InvalidArgumentSizeException("El nombre del comando es demasiado largo (máx 12 caracteres)");
-
-            // Añadimos padding al nombre de comando para que tenga exáctamente 12 carácteres.
-        }else if(commandName.length() < 12){
-            // Esto habría que intentar dejarlo más elegante
-            commandName = commandName.concat("\0\0\0\0\0\0\0\0\0\0\0\0").substring(0,12);
         }
 
         this.commandName = commandName;
-        // Añadimos la cadena inicial y el nombre del comando al buffer directamente.
-        this.append(MsgConstants.MESSAGE_START_STRING).append(commandName);
     }
 
-    //getters
+
+    //getters y setters
 
     public String getCommandName() {
         return this.commandName;
     }
 
+    /**
+     * Devuelve una copia de solo lectura del {@link AbstractHeader#header}
+     * @return Un {@link ByteBuffer} de solo lectura
+     */
     public ByteBuffer getHeader() {
-        return this.header;
+        return this.header.hasArray() ? this.header.asReadOnlyBuffer() : null;
+    }
+
+    public int getPayloadSize() {
+        return this.payloadSize;
+    }
+
+    public void setPayloadSize(int payloadSize) {
+        this.payloadSize = payloadSize;
+    }
+
+    public byte[] getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(byte[] checksum) {
+        this.checksum = checksum;
     }
 
     // metodos append sobrecargados
-    public AbstractHeader append(byte[] bytes){
+    private AbstractHeader append(byte[] bytes){
         header.put(bytes);
         return this;
     }
 
-    public AbstractHeader append(ByteBuffer byteBuffer){
+    private AbstractHeader append(ByteBuffer byteBuffer){
         header.put(byteBuffer);
         return this;
     }
 
-    public AbstractHeader append(Integer num){
+    private AbstractHeader append(Integer num){
         header.put(num.byteValue());
         return this;
     }
 
     // Probablemente no lo necesitemos
-    public AbstractHeader append(Long num){
+    private AbstractHeader append(Long num){
         header.put(num.byteValue());
         return this;
     }
 
-    public AbstractHeader append(String s){
+    private AbstractHeader append(String s){
         header.put(s.getBytes(StandardCharsets.ISO_8859_1));
         return this;
     }
+
+    /**
+     * Funcion de utilidad que devuelve una cadena de 12 caracteres, con la cadena original más un padding de nulls
+     * hasta alcanzar ese tamaño.
+     * @param s un String
+     * @return s con nulls añadidos a la derecha hasta alcanzar 12 caracteres.
+     */
+    public String addPadding(String s){
+        String result = new String(s);
+
+        result = result.concat("\0\0\0\0\0\0\0\0\0\0\0\0").substring(0,MsgConstants.MESSAGE_COMAND_SIZE);
+        return result;
+    }
+
+    /**
+     * Esta función escribe la información en {@link AbstractHeader#header}.
+     * @throws IllegalStateException Si el buffer ya ha sido escrito.
+     */
+    protected void writeBuffer() throws IllegalStateException{
+        if(!this.header.hasArray()){
+            throw new IllegalStateException("Este mensaje ya ha sido escrito");
+        }
+        this.header = ByteBuffer.allocate(HEADER_LENGTH);
+        this.append(MsgConstants.MESSAGE_START_BYTES)
+                .append(addPadding(this.commandName))
+                .append(this.payloadSize)
+                .append(this.checksum);
+    }
+
 
 }
 
