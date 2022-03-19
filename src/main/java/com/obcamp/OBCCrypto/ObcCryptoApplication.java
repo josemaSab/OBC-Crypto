@@ -26,7 +26,7 @@ public class ObcCryptoApplication {
 		Bloque genesis = PruebaTrabajoService.pow(preBloqueGenesis);
 		System.out.println("BLOQUE MINADO!!!!!!!!!!!");
 		System.out.println("Hash Actual: " + new String(genesis.getHashActual()));
-		System.out.println("Hash Anteior: " + genesis.getHashAnterior());
+		System.out.println("Hash Anterior: " + genesis.getHashAnterior());
 		System.out.println("Hash Dificultad: " + genesis.getDificultad());
 		System.out.println("Hash Nonce: " + genesis.getNonce());
 		System.out.println("Hash hora de creacion: " + genesis.getHoraCreacionBloque());
@@ -38,7 +38,7 @@ public class ObcCryptoApplication {
 		Bloque bloqueRecuperado = bloqueRepository.findById(1l).get();
 		System.out.println("------------BLOQUE RECUPERADO BD------------------");
 		System.out.println("Hash Actual: " + new String(bloqueRecuperado.getHashActual()));
-		System.out.println("Hash Anteior: " + bloqueRecuperado.getHashAnterior());
+		System.out.println("Hash Anterior: " + bloqueRecuperado.getHashAnterior());
 		System.out.println("Hash Dificultad: " + bloqueRecuperado.getDificultad());
 		System.out.println("Hash Nonce: " + bloqueRecuperado.getNonce());
 		System.out.println("Hash hora de creacion: " + bloqueRecuperado.getHoraCreacionBloque());

@@ -52,7 +52,13 @@ public class SaldoService {
         //Si es emisor restamos la cantidad de la transaccion y la comision
         if (emisor == true) {
              ultimaTransaccion = ultimaTransaccion(publicKey);
-             saldo = ultimaTransaccion.getDatosAdicionales().getSaldoActualEmisor() - comision - cantidadEnviada;
+             //Si existen transacciones de emisor se calcula el saldo despues de la transaccion
+             if(ultimaTransaccion != null) {
+                 saldo = ultimaTransaccion.getDatosAdicionales().getSaldoActualReceptor() - comision - cantidadEnviada;
+             //Si no existen ninguna transacción el saldo para esa wallet es 0
+             }else{
+                 saldo = 0;
+             }
         //Si es el receptor sumamos la cantidad de la transaccion
         }else{
             ultimaTransaccion = ultimaTransaccion(publicKey);
@@ -68,15 +74,17 @@ public class SaldoService {
      */
     private Transaccion ultimaTransaccion(PublicKey publicKey){
         Transaccion ultimaTransaccion = null;
-        List<Transaccion> listaTransacciones = new ArrayList<>();
+        List<Transaccion> listaTransacciones = null;
 
-        listaTransacciones = this.transaccionRepository.findAllByEmisor(publicKey);
-        for(int i = 1; i< listaTransacciones.size(); i++){
-            if(i == 1){
-                ultimaTransaccion = listaTransacciones.get(i-1);
-            }
-            if(ultimaTransaccion.getHoraTransaccion().isBefore(listaTransacciones.get(i).getHoraTransaccion())){
-                ultimaTransaccion = listaTransacciones.get(i);
+        listaTransacciones = this.transaccionRepository.findAllByReceptor(publicKey);
+        if(listaTransacciones != null) {
+            for (int i = 1; i < listaTransacciones.size(); i++) {
+                if (i == 1) {
+                    ultimaTransaccion = listaTransacciones.get(i - 1);
+                }
+                if (ultimaTransaccion.getHoraTransaccion().isBefore(listaTransacciones.get(i).getHoraTransaccion())) {
+                    ultimaTransaccion = listaTransacciones.get(i);
+                }
             }
         }
         return ultimaTransaccion;

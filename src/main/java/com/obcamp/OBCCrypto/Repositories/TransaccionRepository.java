@@ -18,5 +18,6 @@ import java.util.List;
 public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
 
     List<Transaccion> findAllByEmisor(PublicKey publicKey);
+    List<Transaccion> findAllByReceptor(PublicKey publicKey);
 
 }
