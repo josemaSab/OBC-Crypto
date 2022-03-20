@@ -14,6 +14,11 @@ import java.time.ZoneOffset;
  */
 public class PruebaTrabajoService {
 
+    /**
+     * Metodo que realiza la prueba de trabajo de un bloque
+     * @param prebloque bloque sin el hash calculado
+     * @return bloque con el hash calculado
+     */
     public static Bloque pow(Bloque prebloque){
         Bloque bloque = null;
         long nonce = prebloque.getNonce();

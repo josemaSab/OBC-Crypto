@@ -7,7 +7,7 @@ import com.obcamp.OBCCrypto.Utilidades.Time.ConversionTiempo;
 
 /**
  * Proyecto OBC-Crypto
- * Servicio para el calculo de la dificultad cada 2000 bloques
+ * Servicio para el calculo de la dificultad cada n bloques
  * @author Josema
  * @version 1.0
  * Equipo: Josema, Adrian, Manu
@@ -49,5 +49,4 @@ public class DificultadService {
         }
         return dificultad;
     }
-
 }
