@@ -2,6 +2,7 @@ package com.obcamp.OBCCrypto;
 
 import com.obcamp.OBCCrypto.Models.Bloques.Bloque;
 import com.obcamp.OBCCrypto.Models.Transacciones.Transaccion;
+import com.obcamp.OBCCrypto.Models.Wallets.Wallet;
 import com.obcamp.OBCCrypto.Repositories.BloqueRepository;
 import com.obcamp.OBCCrypto.Repositories.TransaccionRepository;
 import com.obcamp.OBCCrypto.Services.Encrypt.FirmaService;
@@ -21,7 +22,7 @@ public class ObcCryptoApplication {
 		//Obtenemos los repositories para trabajar con la base de datos
 		BloqueRepository bloqueRepository = context.getBean(BloqueRepository.class);
 		TransaccionRepository transaccionRepository = context.getBean(TransaccionRepository.class);
-
+		Wallet emisor = new Wallet();
 		Bloque preBloqueGenesis = new Bloque(null,null,5);
 		Bloque genesis = PruebaTrabajoService.pow(preBloqueGenesis);
 		System.out.println("BLOQUE MINADO!!!!!!!!!!!");
