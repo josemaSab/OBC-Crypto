@@ -1,7 +1,7 @@
-package com.obcamp.OBCCrypto.network.core.messages.base;
+package com.obcamp.OBCCrypto.network.core.messaging.base;
 
-import com.obcamp.OBCCrypto.network.core.messages.ConcreteHeader;
-import com.obcamp.OBCCrypto.network.core.messages.exceptions.InvalidArgumentSizeException;
+import com.obcamp.OBCCrypto.network.core.messaging.ConcreteHeader;
+import com.obcamp.OBCCrypto.network.core.messaging.exceptions.InvalidArgumentSizeException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -38,29 +38,6 @@ public class TestConcreteHeader {
                     assertEquals("version", v);
                 }
         );
-
-    }
-
-    @Test
-    public void testAppendInt(){
-
-        assertAll(
-                () -> {
-                    ConcreteHeader testHeader = new ConcreteHeader("version");
-                    testHeader.append(8);
-                    byte[] bytes = testHeader.getHeader().array();
-                    byte[] num = new byte[1];
-                    System.arraycopy(bytes, 18,num,0,1);
-
-                    int n = new BigInteger(num).intValue();
-
-                    assertEquals(8, n, "Fallo al añadir/parsear un entero");
-
-                }
-        );
-
-
-
 
     }
 
