@@ -25,4 +25,12 @@ public interface Writable {
      */
     int getBytesSize();
 
+    /**
+     * Debe devolver true si todas las instancias ocupan la misma cantidad de espacio una vez serializadas
+     * @return {@code true} si todas las instancias tienen el mismo tamaño, {@code false} en caso contrario
+     */
+    default boolean isFixedSize(){
+        return false;
+    }
+
 }
