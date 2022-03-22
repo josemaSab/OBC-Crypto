@@ -1,6 +1,7 @@
 package com.obcamp.OBCCrypto.network.core.entities;
 
 import com.obcamp.OBCCrypto.network.core.messaging.payloads.base.Writable;
+import com.obcamp.OBCCrypto.network.core.messaging.payloads.dto.VersionDTO;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * @author Manu
  * @version 1.0
  * @since 1.0
- * @see com.obcamp.OBCCrypto.network.core.messaging.payloads.dto.VersionPayload
+ * @see VersionDTO
  */
 public class NodeServices implements Writable {
 

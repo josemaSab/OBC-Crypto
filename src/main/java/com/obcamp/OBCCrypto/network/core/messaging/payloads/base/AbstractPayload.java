@@ -49,11 +49,13 @@ public abstract class AbstractPayload<T extends Writable> {
 
     /**
      * Comprueba si el {@link #payload} admite más de un elemento
-     * @return {@code true} si se permite incluir más d eun elemento, {@code false} en caso contrario
+     * @return {@code true} si se permite incluir más de un elemento, {@code false} en caso contrario
      */
     public boolean allowsMultipleItems(){
         return allowsMultipleItems;
     }
+
+
 
     /**
      * Devuelve el número de elementos en el {@link #payload}
