@@ -4,6 +4,7 @@ import com.obcamp.OBCCrypto.network.core.messaging.payloads.base.Writable;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 
 
 public abstract class BasePeerAddress implements HostInterface, Writable {
@@ -76,6 +77,15 @@ public abstract class BasePeerAddress implements HostInterface, Writable {
     }
 
     // Metodos implementados de Writable
+
+
+    @Override
+    public ByteBuffer getBytes() {
+        ByteBuffer buffer = ByteBuffer.allocate(this.getBytesSize());
+        buffer.put(this.getIPv6RawAddress());
+        buffer.putInt(this.port);
+        return buffer;
+    }
 
     @Override
     public int getBytesSize() {
